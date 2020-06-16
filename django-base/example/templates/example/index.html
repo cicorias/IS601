@@ -1,4 +1,8 @@
 
+{% extends 'example/base.html' %}
+{% block title %}Baked Goods{% endblock %}
+
+{% block content %}
 <h1>Your list of Baked Goods</h1>
 <p>Clicking and item brings you to a detailed page.</p>
 {% if baked_good_list %}
@@ -10,3 +14,5 @@
 {% else %}
     <p>No Baked Goods are available.</p>
 {% endif %}
+
+{% endblock %}
