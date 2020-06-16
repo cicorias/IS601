@@ -1,0 +1,12 @@
+
+<h1>Your list of Baked Goods</h1>
+<p>Clicking and item brings you to a detailed page.</p>
+{% if baked_good_list %}
+    <ul>
+    {% for item in baked_good_list %}
+        <li>ID: {{ item.id }} <a href="/example/{{ item.id }}">{{ item.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Baked Goods are available.</p>
+{% endif %}
