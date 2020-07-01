@@ -1,0 +1,23 @@
+{
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.linting.enabled": true,
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.extraPaths": [
+    "./django-base/example"
+  ],
+  "[python]": {
+    "editor.tabSize": 4
+  },
+  "python.testing.unittestEnabled": false,
+  "python.testing.unittestArgs": [
+    "-v",
+    "-s",
+    "./notebooks/project",
+    "-p",
+    "test_*.py"
+  ],
+  "python.testing.pytestEnabled": false,
+  "python.testing.nosetestsEnabled": false,
+  "python.dataScience.disableJupyterAutoStart": true
+}
