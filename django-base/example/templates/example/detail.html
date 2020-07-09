@@ -1,4 +1,5 @@
 {% extends 'example/base.html' %}
+{% load static %}
 {% block title %}{{item.name}}{% endblock %}
 
 {% block content %}
@@ -7,4 +8,12 @@ Price: {{ item.price }}<br/>
 Recipe: {{ item.recipe }}<br/>
 Type: {{ item.sTypes }}<br/>
 Description {{ item.desc }}
+
+Bread or NO Bread:
+{% if isBread %}
+<img src="{% static 'images/bread-squashed.jpg' %}">
+{% else %}
+<img src="{% static 'images/no-bread-squashed.jpg' %}" >
+{% endif %}
+
 {% endblock %}

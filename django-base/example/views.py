@@ -24,7 +24,7 @@ def bake(request: HttpRequest) -> HttpResponse:
             # use the ID or someting that created this and 302
             return HttpResponseRedirect(
                 reverse('bake-detail', args=[instance.id]))
-            #return HttpResponseRedirect(reverse('bake-index'))
+            # return HttpResponseRedirect(reverse('bake-index'))
     else:
         form = BakedGoodForm()
 
@@ -46,6 +46,9 @@ def ingredient(request):
 def detail(request: HttpRequest, item_id: int):
     try:
         item = BakedGood.objects.get(pk=item_id)
+        is_bread = True if item.good_type == 'BA' else False
     except BakedGood.DoesNotExist:
         raise Http404("Question does not exist")
-    return render(request, 'example/detail.html', {'item': item})
+
+    return render(request, 'example/detail.html',
+                  {'item': item, 'isBread': is_bread})
