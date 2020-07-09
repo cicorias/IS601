@@ -1,23 +1,43 @@
 from django.db import models
+from django.forms import ModelForm
+
+
+class Ingredient(models.Model):
+    name = models.CharField(max_length=64)
+    desc = models.CharField(max_length=256)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class BakedGood(models.Model):
     name = models.CharField(max_length=64)
     desc = models.CharField(max_length=256)
-    good_type = models.TextChoices('type', 'BAGEL BREAD COOKIE CAKE PRETZEL')
-    sTypes = models.CharField(
-        blank=True, choices=good_type.choices, max_length=20)   
+    type_choices = [
+        ('BA', 'Bagel'),
+        ('BR', 'Bread'),
+        ('CO', 'Cookie'),
+        ('CA', 'Cake'),
+        ('PR', 'Pretzel'),
+        ('OT', 'Other'),
+    ]
+    good_type = models.CharField(max_length=2, choices=type_choices, default='OT')
     price = models.DecimalField(max_digits=6, decimal_places=2)
     recipe = models.TextField()
+    ingredients = models.ManyToManyField(Ingredient)
 
-    def __str__(self):
-        return 'Name: ' + self.name
+    def __str__(self) -> str:
+        return self.name
 
 
-class OtherBakedGood(models.Model):
-    name = models.CharField(max_length=64)
-    desc = models.CharField(max_length=256)
-    goodType = models.TextChoices(
-        'goodType', 'BAGEL BREAD COOKIE CAKE PRETZEL')
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    recipe = models.TextField()
+class BakedGoodForm(ModelForm):
+    class Meta:
+        model = BakedGood
+        fields = ['name', 'desc', 'good_type', 'price', 'recipe', 'ingredients']
+
+
+class IngredientForm(ModelForm):
+    class Meta:
+        model = Ingredient
+        fields = ['name', 'desc']
+

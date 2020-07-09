@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from .models import BakedGood, OtherBakedGood
+from .models import BakedGood, Ingredient
 
-admin.site.register(BakedGood)
-admin.site.register(OtherBakedGood)
+admin.site.register([BakedGood, Ingredient])
