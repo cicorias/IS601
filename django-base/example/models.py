@@ -27,7 +27,18 @@ class BakedGood(models.Model):
     ingredients = models.ManyToManyField(Ingredient)
 
     def __str__(self) -> str:
-        return self.name
+        return self.name + ' fff'
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'desc': self.desc,
+            'type': self.good_type,
+            'price': self.price,
+            'recipe': self.recipe,
+            #  'ingredients': self.ingredients,
+        }
 
 
 class BakedGoodForm(ModelForm):

@@ -1,0 +1,61 @@
+{% extends 'example/base.html' %}
+{% load static %}
+{% block title %}Baked Goods{% endblock %}
+
+{% block content %}
+<h1>Your list of Baked Goods</h1>
+<p>Clicking and item shows details.</p>
+{% if items %}
+    <ul>
+    {% for item in items %}
+        <li>ID: {{ item.id }}&nbsp;&nbsp;&nbsp;&nbsp; 
+            <button class='btn btn-primary' 
+            data-toggle="modal" data-target="#basicExampleModal" 
+            data-datac={{item.id}}>{{ item.name }}  details</button></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Baked Goods are available.</p>
+{% endif %}
+
+<!-- Modal -->
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="bookname">Item name:</label>
+                <input type="text" readonly name='bookname' id='bookname' />
+                <label for="desc">Description:</label>
+                <input type="text" readonly name='desc' id='desc' />
+                <label for="price">Price:</label>
+                <input type="text" readonly name='price' id='price' />
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+<script>
+$('.btn').click(function() {
+        var d = $(this).data('datac');      
+        console.log('user clicked: %s', d);
+        $.getJSON('./' + d)
+            .then( data =>  { 
+                console.warn('got data.');
+                console.warn(data);
+                $('.modal-title').html(data.name);
+                $(".modal-body #bookname").val( data.name );
+                $(".modal-body #price").val( data.price );
+                $(".modal-body #desc").val( data.desc );
+            })
+} );
+</script>
+{% endblock %}

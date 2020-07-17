@@ -1,7 +1,8 @@
 from django.http import (HttpResponse,
                          HttpRequest,
                          Http404,
-                         HttpResponseRedirect)
+                         HttpResponseRedirect,
+                         JsonResponse)
 
 from django.shortcuts import render
 from django.urls import reverse
@@ -52,3 +53,19 @@ def detail(request: HttpRequest, item_id: int):
 
     return render(request, 'example/detail.html',
                   {'item': item, 'isBread': is_bread})
+
+
+def bakeapi(request: HttpRequest):
+    '''the view that hosts the jquery calls'''
+    items = BakedGood.objects.all()
+    return render(request, 'example/bakeapi.html', {'items': items})
+
+
+def bakeapidetail(request: HttpRequest, item_id: int):
+    '''this is the json api endpoint called'''
+    try:
+        item = BakedGood.objects.get(pk=item_id).as_dict()
+    except BakedGood.DoesNotExist:
+        raise Http404("Question does not exist")
+
+    return JsonResponse(item)
